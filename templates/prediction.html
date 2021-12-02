@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}"
+  <head>
+  </head>
+  <body>
+    <center>
+      <h1>Oil Price Prediction</h1>
+      <br>
+      <img src="/static/plot.png" alt="Plot">
+      <br>
+      <table>
+          <tr>
+            <th>Lower</th>
+            <th>Forecasted</th>
+            <th>Upper</th>
+          </tr>
+          {%for i in range(0,days)%}
+          <tr>
+              <td>{{lower[i]}}</td>
+              <td><b>{{forecasts[i]}}</b></td>
+              <td>{{upper[i]}}</td>
+          </tr>
+          {%endfor%}
+      </table>
+    </center>
+  </body>
+</html>
