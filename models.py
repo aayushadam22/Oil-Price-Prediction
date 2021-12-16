@@ -2,11 +2,12 @@ def runArimaAndHwaas(days):
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
+    import datetime
     #Reading data and preprocessing
     data=pd.read_csv('data.csv')
     data['Date']=pd.to_datetime(data['Date'])
     data.set_index('Date',inplace=True)
-    idx = pd.date_range('2007-07-30', '2021-11-30')
+    idx = pd.date_range('2007-07-30', datetime.date.today()-datetime.timedelta(1))
     data = data.reindex(idx, fill_value=0)
     for i in range(len(data)):
         if int(data.iloc[i])==0:
@@ -24,7 +25,7 @@ def runArimaAndHwaas(days):
 
     #Fitting ARIMA model
     from statsmodels.tsa.arima_model import ARIMA
-    model=ARIMA(data,order=(12,1,1))
+    model=ARIMA(data,order=(5,1,0))
     result=model.fit(disp=0)
     fc,se,conf=result.forecast(days)
     fc=pd.Series(fc,index=forecast_out.index)

@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect
 import numpy as np
 import pandas as pd
 import models
+import datetime
 
 app = Flask(__name__)
 
@@ -30,7 +31,7 @@ def index():
 def download_data():
     import yfinance as yf
     from yahoofinancials import YahooFinancials
-    data = yf.download('BZ=F', start='2007-07-30', end='2021-11-30', progress=False)
+    data = yf.download('BZ=F', start='2007-07-30', end=datetime.date.today(), progress=False)
     data=data.drop(['Open','High','Low','Close','Volume'],axis=1)
     data.columns=['Price']
     data.to_csv('data.csv')
