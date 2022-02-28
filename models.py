@@ -18,10 +18,9 @@ def runArimaAndHwaas(days):
                     data.iloc[i]=data.iloc[i-1]
 
     #Fitting HWAAS model
-    from atspy import AutomatedModel
-    model_list = ["HWAAS"]
-    am = AutomatedModel(df = data , model_list=model_list,forecast_len=days)
-    forecast_out = am.forecast_outsample()
+    from statsmodels.tsa.holtwinters import ExponentialSmoothing
+    fitted_model = ExponentialSmoothing(data,trend='add',seasonal='add',seasonal_periods=365).fit()
+    forecast_out = fitted_model.forecast(days)
 
     #Fitting ARIMA model
     from statsmodels.tsa.arima_model import ARIMA
